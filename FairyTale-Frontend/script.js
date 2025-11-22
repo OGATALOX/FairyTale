@@ -1,57 +1,34 @@
-// 1️⃣ Get references to HTML elements
+// Get references to DOM elements
 const input = document.getElementById("prompt-text");
 const button = document.getElementById("generate-button");
 const output = document.getElementById("output");
 
-// 2️⃣ Add click event listener
+// Replace with your Render backend URL
+const API_URL = "https://fairytale-4t2m.onrender.com";
+
 button.addEventListener("click", async () => {
-  const prompt = input.value.trim(); // get text
+    const promptText = input.value.trim();
+    if (!promptText) return;
 
-  // 3️⃣ Clear previous output
-  output.innerHTML = "";
+    output.innerHTML = "Generating image...";
 
-  if (!prompt) {
-    alert("Please enter a prompt!");
-    return;
-  }
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: promptText })
+        });
 
-  // 4️⃣ Optional: show a "loading" message
-  const loadingText = document.createElement("p");
-  loadingText.textContent = "Generating image...";
-  output.appendChild(loadingText);
+        const data = await response.json();
 
-  try {
-    // 5️⃣ Call your Render backend
-    const response = await fetch("https://your-backend.onrender.com/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ prompt: prompt })
-    });
-
-    const data = await response.json();
-
-    // 6️⃣ Remove loading message
-    output.innerHTML = "";
-
-    if (data.error) {
-      output.textContent = "Error: " + data.error;
-      return;
+        if (data.image_url) {
+            // Show the image
+            output.innerHTML = `<img src="${data.image_url}" alt="AI Image" style="max-width:100%; margin-top:20px;">`;
+        } else {
+            output.innerHTML = "Failed to generate image.";
+        }
+    } catch (err) {
+        console.error(err);
+        output.innerHTML = "Error generating image.";
     }
-
-    // 7️⃣ Create image element with the URL returned by backend
-    const img = document.createElement("img");
-    img.src = data.url;
-    img.alt = prompt;
-    img.style.marginTop = "20px";
-    img.style.maxWidth = "100%";
-
-    output.appendChild(img);
-
-  } catch (err) {
-    output.innerHTML = "";
-    output.textContent = "Error connecting to backend.";
-    console.error(err);
-  }
 });
