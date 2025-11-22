@@ -1,34 +1,26 @@
-// Get references to DOM elements
-const input = document.getElementById("prompt-text");
-const button = document.getElementById("generate-button");
-const output = document.getElementById("output");
+const generateButton = document.getElementById("generate-button");
+const promptInput = document.getElementById("prompt-text");
+const outputDiv = document.getElementById("output");
 
-// Replace with your Render backend URL
-const API_URL = "https://fairytale-4t2m.onrender.com";
+generateButton.onclick = async () => {
+  const prompt = promptInput.value;
 
-button.addEventListener("click", async () => {
-    const promptText = input.value.trim();
-    if (!promptText) return;
+  try {
+    const response = await fetch("https://fairytale-4t2m.onrender.com/generate", {  // ← MUST match your Render URL
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt })
+    });
 
-    output.innerHTML = "Generating image...";
+    const data = await response.json();
 
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt: promptText })
-        });
-
-        const data = await response.json();
-
-        if (data.image_url) {
-            // Show the image
-            output.innerHTML = `<img src="${data.image_url}" alt="AI Image" style="max-width:100%; margin-top:20px;">`;
-        } else {
-            output.innerHTML = "Failed to generate image.";
-        }
-    } catch (err) {
-        console.error(err);
-        output.innerHTML = "Error generating image.";
+    if (data.image_url) {
+      outputDiv.innerHTML = `<img src="${data.image_url}" alt="AI Image" />`;
+    } else {
+      outputDiv.textContent = "Error generating image.";
     }
-});
+  } catch (err) {
+    console.error(err);
+    outputDiv.textContent = "Error generating image.";
+  }
+};
