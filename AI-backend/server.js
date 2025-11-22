@@ -31,6 +31,9 @@ app.post("/generate", async (req, res) => {
     res.status(500).send("Error generating image");
   }
 });
+app.get("/", (req, res) => {
+  res.send("FairyTale AI Backend is running. Use POST /generate to generate images.");
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
