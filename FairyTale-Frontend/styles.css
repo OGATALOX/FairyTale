@@ -1,0 +1,56 @@
+body {
+    background-color:rgb(59, 0, 59);
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color:aquamarine;
+    justify-self: center;
+    margin-top: 50px;
+}
+
+.PromptArea {
+    display: flex;
+   /* flex-direction: column; */
+    justify-content: center;
+    align-items:center;
+    gap: 5px;
+}
+
+
+.PromptArea input {
+    height: 40px;
+    width: 600px;
+    border-radius: 15px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding-left: 10px;
+    background-color: rgb(43, 43, 43);
+    border-style: solid;
+    border-color: rgb(255, 0, 234);
+}
+
+.PromptArea button {
+    width: 115px;
+    height: 45px;
+    border-radius: 15px;
+    font-weight: bold;
+    background: linear-gradient(45deg,rgb(62, 255, 181), rgb(99, 255, 99));
+    transition: 0.2s;
+}
+
+.PromptArea button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    
+}
+
+.input-divider {
+    margin-top: 15px;
+    width: 715px;
+}
+
+#output {
+    justify-self: center;
+    margin-top: 50px;
+}
