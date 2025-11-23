@@ -14,20 +14,26 @@ const openai = new OpenAI({
 
 app.post("/generate", async (req, res) => {
   try {
-    const { prompt } = req.body;
+    console.log("Received request:", req.body); // log incoming request
+
+    const prompt = req.body.prompt;
+    console.log("Prompt:", prompt);
 
     const result = await openai.images.generate({
       model: "gpt-image-1",
-      prompt,
+      prompt: prompt,
       size: "512x512",
     });
 
+    console.log("OpenAI result:", result); // log the result
+
     res.json({ image_url: result.data[0].url });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Error generating image" });
+    console.error("🔥 BACKEND ERROR:", err.response?.data || err.message || err);
+    res.status(500).send("Error generating image");
   }
 });
+
 
 app.get("/", (req, res) => {
   res.send("FairyTale AI Backend is running. Use POST /generate to generate images.");
