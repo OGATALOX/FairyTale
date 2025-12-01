@@ -11,7 +11,7 @@ app.use(cors());
 const HF_TOKEN = process.env.HUGGINGFACE_TOKEN;
 
 // Stable Diffusion XL model (free, good quality)
-const MODEL_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0";
+const MODEL_URL = "https://router.huggingface.co/hf-inference/stabilityai/stable-diffusion-xl-base-1.0";
 
 app.post("/generate", async (req, res) => {
   try {
