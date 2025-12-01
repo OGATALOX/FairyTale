@@ -14,11 +14,12 @@ generateButton.onclick = async () => {
 
     const data = await response.json();
 
-    if (data.image_url) {
-      outputDiv.innerHTML = `<img src="${data.image_url}" alt="AI Image" />`;
+    if (data.image) {
+      outputDiv.innerHTML = `<img src="${data.image}" alt="AI Image" />`;
     } else {
       outputDiv.textContent = "Error generating image.";
     }
+
   } catch (err) {
     console.error(err);
     outputDiv.textContent = "Error generating image.";
