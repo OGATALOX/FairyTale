@@ -10,7 +10,7 @@ app.use(cors());
 
 const HF_TOKEN = process.env.HUGGINGFACE_TOKEN;
 
-// Stable Diffusion XL model (free, good quality)
+// NEW router endpoint (required by HF)
 const MODEL_URL = "https://router.huggingface.co/hf-inference/stabilityai/stable-diffusion-xl-base-1.0";
 
 app.post("/generate", async (req, res) => {
